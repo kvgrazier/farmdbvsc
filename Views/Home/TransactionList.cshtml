@@ -1,0 +1,56 @@
+﻿@model List<TransactionsWithAccounts>
+<table><tr>
+<td style="padding-left: 10px; padding-right: 10px;"><h4>Transaction Listing</h4></td>
+<td style="padding-left: 10px; padding-right: 10px;"><h5>Person:  @ViewBag.personid</h5></td>
+<td style="padding-left: 10px; padding-right: 10px;"><h5>Begin Date:  @ViewBag.firstday</h5></td>
+<td style="padding-left: 10px; padding-right: 10px;"><h5>End Date:  @ViewBag.lastday</h5></td>
+</tr></table>
+
+@Html.ActionLink("Create New", "TransactionCreate", new { personid=ViewBag.personid, 
+firstDay = ViewBag.firstDay, lastDay = ViewBag.lastDay, sortOrder = ViewBag.AcctSortParm })
+</p>
+<table class="table">
+	<tr>
+		<th>TransactionID</th>
+		<th>TransactionDescription</th>
+		<th>
+			@Html.ActionLink("TransactionDate", "TransactionList",
+       new {personid=ViewBag.personid, firstDay = ViewBag.firstDay, lastDay = ViewBag.lastDay, 
+	   sortOrder = ViewBag.DateSortParm, ChangeSort = true})
+		</th>
+		<th>
+			@Html.ActionLink("AcctNumber", "TransactionList",
+       new {personid=ViewBag.personid, firstDay = ViewBag.firstDay, lastDay = ViewBag.lastDay, 
+	   sortOrder = ViewBag.AcctSortParm, ChangeSort = true })
+		</th>
+		<th>AccountName</th>
+		<th>AcctAmount</th>
+		<th>AcctSubType</th>
+		<th>AcctType</th>
+		<th>AccountPerson</th>
+	</tr>
+	@foreach (var item in Model)
+	{
+	<tr>
+		<td>@Html.DisplayFor(modelItem => item.TransactionID)</td>
+		<td>@Html.DisplayFor(modelItem => item.TransactionDescription)</td>
+		<td>@Html.DisplayFor(modelItem => item.TransactionDate)</td>
+		<td>@Html.DisplayFor(modelItem => item.AccountNumber1)</td>
+		<td>@Html.DisplayFor(modelItem => item.Account_docs.FirstOrDefault().AccountName)</td>
+		<td>@Html.DisplayFor(modelItem => item.Account1Amount)</td>
+		<td>@Html.DisplayFor(modelItem => item.Account_docs.FirstOrDefault().AccountSubType.AccountSubType1)</td>
+		<td>@Html.DisplayFor(modelItem => item.Account_docs.FirstOrDefault().AccountSubType.AccountType.AccountType1)</td>
+		<td>@Html.DisplayFor(modelItem => item.Account_docs.FirstOrDefault().AccountPerson.AccountPerson1)</td>
+		<td>
+			@Html.ActionLink("Edit", "TransactionEdit", new {id = item.Id, 
+			personid=ViewBag.personid, firstday=ViewBag.firstday, lastday=ViewBag.lastday })
+			@Html.ActionLink("Details", "TransactionDetails", new {id = item.Id, 
+			personid=ViewBag.personid, firstday=ViewBag.firstday, lastday=ViewBag.lastday })
+			@Html.ActionLink("Delete", "TransactionDelete", new {id = item.Id, 
+			personid=ViewBag.personid,firstday=ViewBag.firstday, lastday=ViewBag.lastday })
+		</td>
+	</tr>
+	}
+</table>
+
+
